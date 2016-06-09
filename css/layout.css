@@ -1,0 +1,123 @@
+@import url(https://fonts.googleapis.com/css?family=Varela+Round);
+/* CSS Reset */
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{border:0;font-size:100%;font:inherit;vertical-align:baseline;margin:0;padding:0}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:none}table{border-collapse:collapse;border-spacing:0}
+/* Clearfix */
+.clear:before, .clear:after {content: " "; display: table;}
+.clear:after {clear: both;}
+
+body {position: relative; font-family: 'Varela Round', arial, sans-serif; box-sizing: border-box;}
+a {text-decoration: none; color: #00c;}
+
+header {border-bottom: 1px solid #bbb; padding: 10px;}
+
+a.button {display: block; width: 100px; -khtml-border-radius: 3px; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; border-radius: 3px; color: #fff; background: #fff; border: 2px solid #222; color: #000; text-align: center; padding: 15px 20px; margin: 4px auto;}
+a.button:hover {background: #222; color: #eee;}
+
+nav h1 {float: left; border: 1px solid #fff; padding: 4px 10px; font-weight: bold; font-size: 20px;}
+nav a {float: right; padding: 10px; -khtml-border-radius: 3px; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; border-radius: 3px; border: 1px solid #fff; padding: 4px 10px; margin: 0 4px;}
+nav a.active {border: 1px solid #00c;}
+
+#additional-experience, #additional-work {float: right;}
+#additional-work {margin-top: 12px;}
+.more {display: none;}
+
+#content {display: block; position: relative; margin: 20px 0 0 14px;}
+#about {display: block; float: left; width: 50%;}
+
+#info p {font-size: 16px; line-height: 24px; margin: 0 0 16px; padding: 0 8px;}
+#info p.contact {font-size: 14px; color: #444; font-style: italic;}
+#info p.contact em, #info p.contact span {font-size: 20px;}
+#info p.contact span {display: none;}
+#info p strong {font-weight: bold; font-size: 18px;}
+#info img {display: block; width: 98%; max-width: 392px; margin: 4px auto;}
+
+#resume {display: none; padding: 0 8px;}
+#resume h1 {font-size: 18px; font-weight: bold; margin-bottom: 10px;}
+#resume h2 {font-size: 16px; font-weight: bold; border-bottom: 1px solid #eee;}
+#resume .education, #resume .location {font-size: 15px; line-height: 23px; padding: 0 10px;}
+#resume .education span, #resume .location span {display: block; float: left; width: 18%; min-width: 190px;}
+#resume .education strong {display: block; float: left; font-weight: bold; width: 65%; min-width: 400px;}
+#resume .location strong {display: block; float: left; font-weight: bold;}
+#resume .location em {display: block; float: right;}
+#resume .position, #resume h3 {font-size: 15px; line-height: 20px; font-weight: bold; padding: 0 10px;}
+#resume ul {padding: 0 10px 10px; list-style-type: circle; list-style-position: outside;}
+#resume ul li {font-size: 14px; line-height: 19px; margin-left: 14px;}
+
+#code-and-portfolio {display: block; float: left; width: 48%;}
+
+#code, #portfolio {display: block; float: left; width: 100%; margin: 0 0 10px 10px; border-bottom: 1px solid #ddd; padding: 0 0 30px;}
+#code p {font-size: 15px; color: #555;}
+#code h3, #portfolio h3 {font-size: 17px; font-weight: bold; margin: 0 0 2px;}
+#code a.fancybox-thumb img, #code a.code-thumb img, #portfolio a.fancybox-thumb img {border: 1px solid #ddd;}
+#code a span {text-align: center;}
+#code h4, #portfolio h4 {font-size: 14px; color: #444; margin: 10px 0;}
+
+
+#code ul, #portfolio ul {width: 100%;}
+#code ul li, #portfolio ul li {float: left; width: 23%; margin: 2px 1%;}
+#portfolio ul.additional-work {margin-top: 12px; opacity: 0.65;}
+#portfolio ul.additional-work li {width: 10.5%;}
+#portfolio ul.additional-work li img {border: 1px solid #ddd;}
+#code ul li img, #portfolio ul li img {width: 100%;}
+
+footer {clear: both; font-size: 13px; text-align: center; margin: 12px 0;}
+footer span a.current-code {-khtml-border-radius: 3px; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; border-radius: 3px; padding: 3px 5px; background: #00c; color: #fff;}
+
+@media screen and (max-width: 900px) {
+    #info p {font-size: 14px; line-height: 19px;}
+}
+
+@media screen and (max-width: 865px) {
+    #info {margin-bottom: 40px;}
+    #info p {font-size: 24px; line-height: 32px;}
+    #info p.contact {font-size: 22px; color: #444; font-style: italic;}
+    #info p.contact em, #info p.contact span {font-size: 28px;}
+    #info p.contact em {display: none;}
+    #info p.contact span {display: inline;}
+    #info p strong {font-weight: bold; font-size: 24px;}
+    #info img {max-width: 392px;}
+    #resume {width: 98%;}
+    #about {width: 98% !important; margin: 0 !important;}
+	#resume .education span, #resume .location span {min-width: 200px;}
+	#resume .location strong {width: auto;}
+    #code-and-portfolio {display: block; float: left; width: 98%;}
+}
+
+@media screen and (max-width: 400px) {
+	#resume .education strong {font-size: 12px;}
+}
+
+@media screen and (max-device-width: 900px) {
+    #info p {font-size: 14px; line-height: 19px;}
+}
+
+@media screen and (max-device-width: 865px) {
+    nav h1 {font-size: 42px;}
+    nav a {font-size: 36px;}
+    #info {margin-bottom: 40px;}
+    #info p {font-size: 24px; line-height: 32px;}
+    #info p.contact {font-size: 22px; color: #444; font-style: italic;}
+    #info p.contact em, #info p.contact span {font-size: 28px;}
+    #info p.contact em {display: none;}
+    #info p.contact span {display: inline;}
+    #info p strong {font-weight: bold; font-size: 24px;}
+    #info img {max-width: 392px;}
+    #resume {width: 98%;}
+    #about {width: 98% !important; margin: 0 !important;}
+    #resume h2 {font-size: 29px;}
+    #resume .education span, #resume .location span {float: none; min-width: 98%; font-size: 20px; margin-top: 20px;}
+    #resume .education strong {float: none; width: 98%; font-size: 32px !important; line-height: 40px;}
+    #resume .location strong {float: none; width: 98%; font-size: 27px; line-height: 40px; font-weight: bold;}
+    #resume .location em {float: none; color: #555; font-size: 18px; margin-bottom: 20px;}
+    #resume .position {font-size: 27px;}
+    #code-and-portfolio {display: block; float: left; width: 98%;}
+    #code h3, #portfolio h3 {font-size: 36px;}
+    #code p {font-size: 28px;}
+    #code h4, #portfolio h4 {font-size: 29px;}
+    a.button {width: 30%; padding: 20px; font-size: 50px;}
+    #additional-experience, #additional-work {font-size: 34px;}
+}
+
+@media screen and (max-device-width: 400px) {
+	#resume .education strong {font-size: 12px;}
+}

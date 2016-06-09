@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+	<!-- Page Design and Content by Michael Sherman Copyright 2016 -->
+	<!-- Please request permission to repost this content. Contact via github.com/sher-mon -->
+	<head>
+		<title>Small Dev Teams and Being Pragmatic</title>
+		<meta name="description" content="Small Dev Teams and Being Pragmatic">
+		<meta charset="utf-8"/>
+		<link rel="stylesheet" type="text/css" href="css/layout.css">
+		<style>
+			.content {width: 75%; margin: 10px auto;}
+			h1 {font-size: 23px; font-weight: bold; margin: 10px;}
+			p {margin: 10px; font-size: 16px; line-height: 25px;}
+			p.code {font-family: "Courier New", "Courier"; font-size: 14px; padding: 14px 8px; background: #ccc; border: 1px solid #444;}
+			p.footnote {font-style: italic; color: #666; font-size: 13px;}
+		</style>
+	</head>
+	<body>
+		<section class="content">
+			<h1>Small Dev Teams and Being Pragmatic</h1>
+			<p>
+				The size of your team and expectations for pushing code with respect to product feature delivery deadlines should be largely considered when choosing a development strategy. That sexy, new framework is not so appealing when you realize the task at hand could have been executed elegantly in a fraction of the time. A decision to be “cutting edge” across all deliverables can become a roadblock for features that could really use the resources for more sophisticated development.
+			</p>
+			<p>
+				Let's take, for example, a wearables startup with three front end developers and two designer/UI dude(ttes). This hot startup has a two pronged approach for monetization:<br/>
+				1. Sell sensor equipped classy watches and stylish wristbands (Acquire a customer)<br/>
+				2. Build out a platform to engage the user and analyze the data collected via their devices (A subscription service, i.e. the real money maker)
+			</p>
+			<p>
+				As the lead developer with a license to build out the front end of the platform as you see fit, your only major constraint is the the tight deadline: the watches and wristbands will be coming off the assembly line soon and product will need to be moved to meet investors’ terms. Without a robust platform and awesome interfaces to keep users excited about continued use of their wearables, there’s no incentive for them to choose your device over Fitbit. Without some beautiful marketing and product pages, expressing the experience of using your wearables will be a tough sell. So both need to happen. And fast.
+			</p>
+			<p>
+				Having just met with your design/UI team compadres, who have finally received the sign off on final designs for product pages and platform interfaces, you retreat to the Ginkgo conference room. (Your CEO has chosen an open floor plan office with conference rooms sporting the names of various trees native to Asia, of course.) React is all the rage these days and you’ve been dying to sink your teeth into a modern framework. It makes perfect sense for the data analytics heavy platform. The data aggregated from the device will largely inform the structure of your React components so it’s a no-brainer. Looking at the product pages, you see layouts that, aside from the actual product featured on a given page, have designs that are 95% identical and scream “I’m a component” and “I’m a component within another component.” So your initial inclination is to build the product pages out in React as well. Eight unique wearable product pages all being produced by a central React page. Sounds like a noble step in the right direction.
+			</p>
+			<p>
+				You’re about to discuss your fully React-ive development strategy with the other two front end developers on your team when you have a sudden flashback to your previous company’s initial launch (and at that time the backend was Java so “fast changes” were a nightmare at best). You remember that the product pages for the three selfie sticks began life nearly identical in design but as the launch date neared, each evolved into its own beast to showcase its widely varying features and convey the unique experiences it could capture. As the launch drew close, every time you made an update to the design via JSP, an exec wanted to see it moments later. Which meant you had to nudge the Java developer to redeploy tomcat on staging. Which meant you just barely escaped being whacked by an angry Java developer with no shortage of selfie sticks within an arm’s reach of his desk.
+			</p>
+			<p>
+				You have a small team. Like all stellar web and app designers you’ve had the pleasure of working with over the last few years, those on your new team are pretty adept at HTML and CSS as well as some templating languages. But they are not heavy into modern frameworks and will likely cower and cringe if tasked with making some quick design changes in React. In a moment of clarity, you realize that you are now, in effect, to the designer what the Java developer was to you. Two and a half months from now when you’re 10 hours deep in React, coding exhaustive platform features that are the true meat of your position, are you going to be willingly pulled away from your work space (known to many as the dojo) to make an update that the designers could have handled confidently on their own if it were in a standard markup template? (Based on your experience of dealing with Java developers and selfie sticks, you scream out “NO!” Luckily, the Ginkgo conference room is well insulated and no one sees you lose your cool.)
+			</p>
+			<p>
+				At this point, you make an informed decision that will preserve your sanity to the best it can be at crunch time by choosing a development strategy that will benefit all members on your team as well as the company as a whole. You know your designers, having strong command of HTML and CSS, will feel far more comfortable jumping into something recognizably close to a structured layout like a Jade or HAML template than weird React component thingies. Given your short timeline until launch, you see the massive benefit of splitting the front end into two separate strategies. As such, you decide marketing and product pages will be built out in something that can be handled by more members of your team further down the line. You can feel assured that your front end developers will be able to hammer away at the platform without being bothered while additional last minute product page changes can be adjusted by the designers.
+			</p>
+			<p>
+				...
+			</p>
+			<p>
+				Pressure mounts as the platform release date nears. Product pages were thought to be complete but, as can be expected, some bold design requests have been handed down from the Head of Product. They want to see the updates on staging ASAP. Front End engineers have sequestered themselves in the Japanese Maple conference room as they grind to smooth out the finishing touches of the platform. Calm and collected, the take charge designers are ready to get their hands dirty and make the updates themselves - they’re HTML/CSS aces. And since you made some savy development choices early on, they can roll on with the changes without the perils of the old Java Nudge.
+			</p>
+
+			<!--
+
+			<p class="code">
+				%section.product<br/>
+				%h2.product-name Product Name<br/>
+				%p.product-description Product description<br/>
+				%ul.product-features<br/>
+				&emsp;&emsp;%li<br/>
+				&emsp;&emsp;&emsp;&emsp;%a{:href => "/product-feature-1.html", :class => "product-feature"} Product Feature 1<br/>
+				&emsp;&emsp;%li<br/>
+				&emsp;&emsp;&emsp;&emsp;%a{:href => "/product-feature-2.html", :class => "product-feature"} Product Feature 2<br/>
+				&emsp;&emsp;%li<br/>
+				&emsp;&emsp;&emsp;&emsp;%a{:href => "/product-feature-3.html", :class => "product-feature"} Product Feature 3<br/>
+				&emsp;&emsp;%li<br/>
+				&emsp;&emsp;&emsp;&emsp;%a{:href => "/product-feature-4.html", :class => "product-feature"} Product Feature 4<br/>
+			</p>
+
+			<p class="code">
+			var Product = React.createClass({<br/>
+		    &emsp;&emsp;render: function(){<br/>
+		    &emsp;&emsp;&emsp;&emsp;return (<br/>
+		    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&lt;div className="product"&gt;<br/>
+		    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&lt;h2 className="product-name"&gt;{this.props.product_data.name}&lt;/h2&gt;<br/>
+		    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&lt;p className="product-description"&gt;{this.props.product_data.description&lt;/p&gt;<br/>
+		    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&lt;ProductFeatures features_data={this.props.product_data.features_arr}/&gt;<br/>
+		    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&lt;/div&gt;<br/>
+		    &emsp;&emsp;&emsp;&emsp;);<br/>
+		    &emsp;&emsp;},<br/>
+		    &emsp;&emsp;componentDidMount: function() {<br/>
+		    &emsp;&emsp;&emsp;&emsp;InitializeProductAnimations();<br/>
+		    &emsp;&emsp;}<br/>
+		    });<br/>
+		    <br/>
+		    var ProductFeatures = React.createClass({<br/>
+		    &emsp;&emsp;render: function(){<br/>
+		    &emsp;&emsp;&emsp;&emsp;var product_features = this.props.features_data.map(function(product_feature, i){<br/>
+		    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;return (<br/>
+		    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&lt;li key={i} className="product-feature"&gt;<br/>
+		    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&lt;a href={product_feature.href} className={product_feature.className}&gt;{product_feature.name}&lt;/a&gt;<br/>
+		    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&lt;/li&gt;<br/>
+		    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;);<br/>
+		    &emsp;&emsp;&emsp;&emsp;});<br/>
+		    &emsp;&emsp;&emsp;&emsp;return (<br/>
+		    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&lt;ul className="product-features"&gt;<br/>
+		    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{product_features}<br/>
+		    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&lt;/ul&gt;<br/>
+		    &emsp;&emsp;&emsp;&emsp;);<br/>
+		    &emsp;&emsp;}<br/>
+		    });<br/>
+			</p>
+
+			-->
+
+			<p>
+				Ultimately, being pragmatic means knowing your team so that you can cultivate a synergy that will allow you to focus your development on the heavy lifting features and prevent you from spreading your resources thin.
+			</p>
+
+			<p class="footnote">
+				As a matter of practicality, the author elected to not build this page in React.
+			</p>
+		</section>
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-76461668-1', 'auto');
+ga('send', 'pageview');
+</script>
+	</body>
+</html>

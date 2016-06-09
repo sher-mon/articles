@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+	<!-- Page Design and Content by Michael Sherman Copyright 2016 -->
+	<!-- Please request permission to repost this content. Contact via github.com/sher-mon -->
+	<head>
+		<title>Building a Customizable Dropdown Input</title>
+		<meta name="description" content="Building a Customizable Dropdown Input">
+		<meta charset="utf-8"/>
+		<style>
+			@import url(https://fonts.googleapis.com/css?family=Varela+Round);
+			/* CSS Reset */
+			html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{border:0;font-size:100%;font:inherit;vertical-align:baseline;margin:0;padding:0}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:none}table{border-collapse:collapse;border-spacing:0}
+			/* Clearfix */
+			.clear:before, .clear:after {content: " "; display: table;}
+			.clear:after {clear: both;}
+
+			body {position: relative; font-family: 'Varela Round', arial, sans-serif; box-sizing: border-box;}
+			a {text-decoration: none; color: #00c;}
+
+			header {border-bottom: 1px solid #bbb; padding: 10px;}
+
+			a.button {display: block; width: 100px; -khtml-border-radius: 3px; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; border-radius: 3px; color: #fff; background: #fff; border: 2px solid #222; color: #000; text-align: center; padding: 15px 20px; margin: 4px auto;}
+			a.button:hover {background: #222; color: #eee;}
+
+			nav h1 {float: left; border: 1px solid #fff; padding: 4px 10px; font-weight: bold; font-size: 20px;}
+			nav a {float: right; padding: 10px; -khtml-border-radius: 3px; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; border-radius: 3px; border: 1px solid #fff; padding: 4px 10px; margin: 0 4px;}
+			nav a.active {border: 1px solid #00c;}
+			
+			.content {width: 75%; margin: 10px auto;}
+			h1 {font-size: 23px; font-weight: bold; margin: 10px;}
+			h2.in-progress {width: 100%; -khtml-border-radius: 3px; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; border-radius: 3px; border: 1px solid #f03; background-color: #fee; padding: 10px; font-size: 17px; text-align: center;}
+			ul.to-dos {list-style: none; background-color: #eef; padding: 20px; border: 1px solid #06c;}
+			ul.to-dos li {padding: 4px 0;}
+			ul.to-dos li:first-of-type {font-weight: bold;}
+			#container {padding: 30px 0 50px;}
+			p {margin: 10px; font-size: 16px; line-height: 25px;}
+			p.code {font-family: "Courier New", "Courier"; font-size: 14px; padding: 14px 8px; background: #ccc; border: 1px solid #444;}
+			p.footnote {font-style: italic; color: #666; font-size: 13px;}
+		</style>
+		<link rel="stylesheet" type="text/css" href="css/dropdowns.css"/>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-rc1/jquery.min.js"></script>
+		<script src="js/dropdowns.js"></script>
+	</head>
+	<body>
+		<section class="content">
+			<h1>Building a Customizable Dropdown Input</h1>
+			<h2 class="in-progress">Article is not yet fully written. Enjoy to the extent you can!</h2>
+			<ul class="to-dos">
+				<li>In progress:</li>
+				<li>Elaborate on dropdown style code</li>
+				<li>Elaborate on dropdown functional code</li>
+				<li>Discuss advantages/disadvantages of using native inputs (possibly separate article)</li>
+			</ul>
+			<p>
+				Ever tried styling a select input to fit the style and color scheme of a form or interface? You probably quickly experienced frustration when you realized the select tag is the HTML equivalent of a rebellious teenager: it will make some minor adjustments but is generally incredibly resistant to following instructions. It could just listen to the simple CSS you’ve given it but would rather cause you a headache.
+			</p>
+			<p>
+				So, what can you do? Create a pseudo dropdown controlling interface that could care less about the select input’s appearance but has all the control it needs. Here's what we'll be building:
+			</p>
+			<div id="container">
+				<select id="character" class="select-interface-linked">
+					<option value="0" selected>Choose Charaacter</option>
+					<option value="1">Mario</option>
+					<option value="2">Luigi</option>
+				</select>
+				<ul id="character-select-interface" class="select-interface" data-status="closed" data-connect="character">
+					<li data-value="0" class="selected">Choose Character<span class="dropdown-arrow"><img src="images/dropdown-arrow.png"></span></li>
+					<li data-value="1">Mario</li>
+					<li data-value="2">Luigi</li>
+				</ul>
+			</div>
+			<p>
+				The technique involves using elements we have complete style and functional control over and then relating a value back to the select input. As such, there are two key pieces:
+			<p>
+			<ol>
+				<li>The select input (we’ll hide it since, as you now know, it just doesn’t want to play nice)</li>
+				<li>An unordered list (far more mature and communicates a value to the stubborn select input)</li>
+			</ol>
+			<p>
+				As we’re not using the select to set a value, it’s possible to just use a text or hidden input. Although this would require less code, it’s a good practice to have the pseudo dropdown controlling interface relate back to its respective “physical” input. So while we could simply set the value  in a hidden input field,
+			<p>
+			<p class="code">
+				&lt;input id="character" type="hidden"/&gt;
+			</p>
+			<p>
+				it’s preferable to update a hidden select input that mirrors the pseudo interface the user will be interacting with:
+			</p>
+			<p class="code">
+				&lt;select id="character" class="select-interface-linked"&gt;<br/>
+				&lt;option value="0" selected&gt;Select Shape&lt;/option&gt;<br/>
+				&emsp;&emsp;&lt;option value="1"&gt;Mario&lt;/option&gt;<br/>
+				&emsp;&emsp;&lt;option value="2"&gt;Luigi&lt;/option&gt;<br/>
+				&lt;/select&gt;
+			</p>
+			<p>
+				As such, we will set up each list element (li) to have a data value that will correspond to the value of the respective select option value:
+			</p>
+			<p class="code">
+				&lt;ul id="character-select-interface" class="select-interface" data-status="closed" data-connect="character"&gt;<br/>
+				&lt;li data-value="0" class="selected"&gt;Choose Character&lt;span class="dropdown-arrow"&gt;&lt;img src="images/dropdown-arrow.png"&gt;&lt;/span&gt;&lt;/li&gt;<br/>
+				&emsp;&emsp;&lt;li data-value="1"&gt;Mario&lt;/li&gt;<br/>
+				&emsp;&emsp;&lt;li data-value="2"&gt;Luigi&lt;/li&gt;<br/>
+				&lt;/ul&gt;
+			</p>
+			<p>
+				This choice has several benefits:
+			</p>
+			<ol>
+				<li>Semantically it’s more accurate</li>
+				<li>If for some reason our pseudo controlling interface is ripped out, the user will not be blocked from selecting a value</li>
+				<li>If, for even stranger reasons, the stylesheet does not load, the user will not be blocked from selecting a value</li>
+			</ol>
+			<p>
+				The setup involves a grouping of ids and classes that will allow a generic initialization to cover all custom dropdowns regardless of how many we add.
+			</p>
+			<ul>
+				<li>&lt;select id="{input_id}" class="select-interface-linked"&gt;</li>
+				<li>&lt;ul id="{input_id}-select-interface" class="select-interface" data-status="closed" data-connect="{input_id}"&gt;</li>
+			</ul>
+			<ol>
+				<li>select id: {input_id} - The form/interface input id we will ultimately be interacting with/requires user input</li>
+				<li>select class: select-interface-linked - A class we will use simply to hide the select input</li>
+				<li>ul id: {input_id}-select-interface - This can actually have any id you’d like since we’re not directly using it, although I recommend following this pattern to keep your interface organized</li>
+				<li>ul class: select-interface - The class used to initialize all custom dropdowns functionality simultaneously</li>
+				<li>ul data-status: "closed" - Will be used to determine how to handle a given dropdowns functionality and state</li>
+				<li>ul data-connect: {input_id} - Has the same value as its corresponding select id</li>
+			</ol>
+			<p>
+				An interface using this setup will follow this HTML markup pattern:
+			</p>
+			<p class="code">
+				&lt;select id="character" class="select-interface-linked"&gt;<br/>
+				&emsp;&emsp;&lt;option value="0" selected&gt;Select Shape&lt;/option&gt;<br/>
+				&emsp;&emsp;&lt;option value="1"&gt;Mario&lt;/option&gt;<br/>
+				&emsp;&emsp;&lt;option value="2"&gt;Luigi&lt;/option&gt;<br/>
+				&lt;/select&gt;<br/>
+				&lt;ul id="character-select-interface" class="select-interface" data-status="closed" data-connect="character"&gt;<br/>
+				&lt;li data-value="0" class="selected"&gt;Choose Character&lt;span class="dropdown-arrow"&gt;&lt;img src="images/dropdown-arrow.png"&gt;&lt;/span&gt;&lt;/li&gt;<br/>
+				&emsp;&emsp;&lt;li data-value="1"&gt;Mario&lt;/li&gt;<br/>
+				&emsp;&emsp;&lt;li data-value="2"&gt;Luigi&lt;/li&gt;<br/>
+				&lt;/ul&gt;
+			</p>
+			<p>
+				Now all we need is style the dropdown to our liking and add some smooth interaction functionality. Let’s start with the styling:
+			</p>
+			<p class="code">
+				html {box-sizing: border-box;}<br/>
+				*, *:before, *:after {box-sizing: inherit;}<br/>
+				body {position: relative; font-family: "Helvetica Neue"; color: #222328; padding: 20px 0;}<br/>
+				#container {position: relative; width: 80%; min-width: 420px; max-width: 650px; margin: 10px auto;}<br/>
+				h1 {font-size: 24px; font-weight: bold; text-align: center;}<br/>
+				.select-interface-linked {display: none;}<br/>
+				ul.select-interface {position: relative; width: 100%; margin: 0 auto;}<br/>
+				ul.select-interface > li {position: absolute; top: 0; background: #fff; border-bottom: 1px solid #ccc; padding: 20px 0; font-size: 26px; text-indent: 10px; cursor: pointer; transition: background-color .3s, color .3s; -webkit-transition: background-color .3s, color .3s; -moz-transition: background-color .3s, color .3s;}<br/>
+				ul.select-interface > li span.dropdown-arrow {display: block; width: 20px; height: 20px;}<br/>
+				ul.select-interface > li span.dropdown-arrow img {width: 100%;}<br/>
+				ul.select-interface > li:first-of-type, ul.select-interface[data-status="closed"] > li.selected {position: relative;}<br/>
+				ul.select-interface[data-status="closed"] > li.selected {background-color: #eee;}<br/>
+				ul.select-interface[data-status="closed"] > li[data-value="0"].selected {background-color: #fff;}<br/>
+				ul.select-interface[data-status="closed"] > li {display: none;}<br/>
+				ul.select-interface[data-status="open"] > li {display: block !important; border-left: 1px solid #444; border-right: 1px solid #444;}<br/>
+				ul.select-interface[data-status="open"] > li:first-of-type {border-bottom: 1px solid #444; background-color: #555; color: #fff;}<br/>
+				ul.select-interface[data-status="open"] > li:last-of-type {border-bottom: 1px solid #000;}<br/>
+				ul.select-interface > li:hover {background-color: #eee;}<br/>
+				ul.select-interface[data-status="closed"] > li[data-value="0"]:hover {background-color: #fff;}<br/>
+				ul.select-interface > li.selected {display: block;}<br/>
+				ul.select-interface > li span.dropdown-arrow {position: absolute; top: 20px; right: 40px; transition: .4s; -webkit-transition: .4s; -moz-transition: .4s;}<br/>
+				ul.select-interface[data-status="open"] > li span.dropdown-arrow {transform: rotate(90deg); -webkit-transform: rotate(90deg); -moz-transform: rotate(90deg);}<br/>
+			</p>
+			<p>
+				And finally, our interaction control:
+			</p>
+			<p class="code">
+				$(document).ready(function(){<br/>
+				&emsp;&emsp;jQuery(".select-interface-linked").val("0");//Reset select value to ensure initial value alignment with respective select-interface<br/>
+				&emsp;&emsp;jQuery("ul.select-interface li").click(function(){<br/>
+				&emsp;&emsp;&emsp;&emsp;var ul_status = jQuery(this).parent().attr("data-status");<br/>
+				&emsp;&emsp;&emsp;&emsp;var model_li_height = jQuery(this).parent().children("li:first-of-type").height();<br/>
+				&emsp;&emsp;&emsp;&emsp;var model_li_width = jQuery(this).parent().children("li:first-of-type").width();<br/>
+				&emsp;&emsp;&emsp;&emsp;var model_li_padding = parseInt(jQuery(this).parent().children("li:first-of-type").css("padding-top"),10);<br/>
+				&emsp;&emsp;&emsp;&emsp;var expand_from_position = (model_li_height+(model_li_padding*2));<br/>
+				&emsp;&emsp;&emsp;&emsp;if (ul_status == "closed")<br/>
+				&emsp;&emsp;&emsp;&emsp;{<br/>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;//Keep the current select interface on top regardless of its DOM position<br/>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;jQuery("ul.select-interface").css("z-index", 0);<br/>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;jQuery("ul.select-interface li").css("z-index", 0);<br/>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;jQuery(this).parent().css("z-index", 100);<br/>
+				<br/>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;//Position the select interface options so that they expand out just below the leading (0 index) informative li<br/>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;jQuery(this).parent().children("li:not(:first-of-type)").css("top", expand_from_position);<br/>
+				<br/>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;//Close any other select interfaces to focus attention on current input<br/>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;jQuery("ul.select-interface").attr("data-status", "closed");<br/>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;jQuery(this).parent().attr("data-status", "open");<br/>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<br/>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;//Expose select interface options<br/>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;jQuery(this).parent().children("li").each(function(){<br/>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;var li_value = jQuery(this).data("value");<br/>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;var li_border = parseInt(jQuery(this).css("border-bottom-width"),10);<br/>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;var animate_top = li_value*(model_li_height+(model_li_padding*2)+li_border)+"px";<br/>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;jQuery(this).css("width", model_li_width+"px");<br/>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;jQuery(this).css("z-index", li_value);<br/>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;jQuery(this).animate({top: animate_top}, 300);<br/>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;});<br/>
+				&emsp;&emsp;&emsp;&emsp;}<br/>
+				&emsp;&emsp;&emsp;&emsp;if (ul_status == "open")<br/>
+				&emsp;&emsp;&emsp;&emsp;{<br/>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;var data_input_id = jQuery(this).parent().data("connect");<br/>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;jQuery("#"+data_input_id).val(jQuery(this).data("value"));<br/>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;jQuery(this).parent().children("li").removeClass();<br/>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;jQuery(this).addClass("selected");<br/>
+				<br/>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;jQuery(this).parent().children("li:not(:first-of-type)").animate({top: expand_from_position}, 100, function(){<br/>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;jQuery(this).parent().attr("data-status", "closed");<br/>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;});<br/>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;//Bring the selected option to the top<br/>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;jQuery("ul.select-interface li.selected").animate({top: 0}, 100);<br/>
+				&emsp;&emsp;&emsp;&emsp;}<br/>
+				&emsp;&emsp;});<br/>
+				});
+			</p>
+			<p>
+				We now have a dropdown interface that not only obeys the styles we’ve given it but is also agreeable to presenting itself uniformly (with presumed cross-browser CSS/JS adjustments).
+			</p>
+			<p class="footnote">
+				M. Sherman was not too rebellious as a teenager but did, on more than one occasion, require some cross-browser tweaking.
+			</p>
+		</section>
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-76461668-1', 'auto');
+ga('send', 'pageview');
+</script>
+	</body>
+</html>
